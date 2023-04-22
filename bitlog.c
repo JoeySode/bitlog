@@ -5,7 +5,7 @@
 
 void printULL(const char* str) {
 
-    unsigned long long n = strtoull(str, NULL, 10);
+    uint64_t n = strtoull(str, NULL, 10);
     int bit = 63;
 
     printf("%llu\t0b", n);
@@ -62,9 +62,12 @@ void printLL(const char* str) {
 void printF32(const char* str) {
 
     float f = strtof(str, NULL);
-    unsigned int n = *(unsigned int*)&f;
+    uint32_t n;
     int bit = 31;
 
+    memcpy(&n, &f, 4);
+
+    // Transfer bytes from f to n to be read as an integer
     printf("%f\t0b", f);
 
     // Following code does not work properly when n is 0, so return if it is
@@ -91,8 +94,11 @@ void printF32(const char* str) {
 void printF64(const char* str) {
 
     double f = strtod(str, NULL);
-    unsigned long long n = *(unsigned long long*)&f;
+    uint64_t n;
     int bit = 63;
+
+    // Transfer bytes from f to n to be read as an integer
+    memcpy(&n, &f, 8);
 
     printf("%f\t0b", f);
 
